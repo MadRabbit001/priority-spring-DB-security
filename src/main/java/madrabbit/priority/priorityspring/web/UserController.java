@@ -1,33 +1,50 @@
-//package madrabbit.priority.priorityspring.web;
+package madrabbit.priority.priorityspring.web;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import madrabbit.priority.priorityspring.pojo.User;
+import madrabbit.priority.priorityspring.service.UserService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/user")
+@CrossOrigin(origins = "http://localhost:3000")
+public class UserController {
+
+    ObjectMapper objectMapper = new ObjectMapper();
+    private final UserService userService;
+
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.getAll();
+    }
+
+    @GetMapping("/byId/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return userService.getById(id);
+    }
+
+    @PostMapping
+    public User createUser(@RequestBody User content) {
+        return userService.create(content);
+    }
+
+//    @PutMapping("/{id}")
+//    public ResponseEntity<HttpStatus> updateUser(@PathVariable Long id, @RequestBody String newuser) {
 //
-//import lombok.RequiredArgsConstructor;
-//import madrabbit.priority.priorityspring.pojo.Users;
-//import madrabbit.priority.priorityspring.service.UserServiceImpl;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
+//        User users = userService.getById(id);
+//        users
 //
-//@RestController
-//@RequiredArgsConstructor
-//@RequestMapping("/api/user")
-//public class UserController {
+//        return new ResponseEntity<>(HttpStatus.OK);
 //
-//    UserServiceImpl userService;
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Users> getUser(@PathVariable Long id){
-//        return new ResponseEntity<>(userService.getUser(id),HttpStatus.OK);
 //    }
-//
-//    @PostMapping("/save")
-//    public ResponseEntity<Users> saveUser(@RequestBody Users user){
-//        return new ResponseEntity<>(userService.saveUser(user),HttpStatus.CREATED);
-//    }
-//
-//    @DeleteMapping("/delete/{id}")
-//    public ResponseEntity<HttpStatus> deleteUser(@PathVariable Long id){
-//        userService.deleteUser(id);
-//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//    }
-//
-//}
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.delete(id);
+    }
+
+}

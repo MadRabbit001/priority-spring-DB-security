@@ -5,8 +5,10 @@ import lombok.*;
 import madrabbit.priority.priorityspring.pojo.enums.SolutionType;
 
 @Entity
-@Getter@Setter
-@AllArgsConstructor@NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Content{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
